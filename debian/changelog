@@ -1,0 +1,6 @@
+howdy (3.0.0-1) unstable; urgency=medium
+
+  * Build howdy and howdy-gtk from the top level meson project.
+  * Add support for building the packages with dpkg-buildpackage.
+
+ -- boltgolt <boltgolt@gmail.com>  Sun, 08 Nov 2026 17:06:57 +0800

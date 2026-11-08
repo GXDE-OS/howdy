@@ -1,0 +1,32 @@
+.TH HOWDY-GTK 1 "November 2026" "howdy 3.0.0" "User Commands"
+.SH NAME
+howdy-gtk \- graphical user interface for Howdy face authentication
+.SH SYNOPSIS
+.B howdy-gtk
+.RI [ options ]
+.SH DESCRIPTION
+.B howdy-gtk
+is the GTK interface used to set up and manage
+.BR howdy (8):
+it registers and removes face models for user accounts, previews the
+infrared camera feed and runs the first-run onboarding wizard which
+downloads the required dlib face recognition models.
+.PP
+It needs to be started with root privileges, which is handled through
+polkit when launched from a desktop environment.
+.SH OPTIONS
+.TP
+.B \-\-start-auth-ui
+Internal option used by howdy to launch the authentication user
+interface. Not intended for manual use.
+.SH FILES
+.TP
+.I /etc/howdy/config.ini
+Howdy configuration file.
+.TP
+.I /etc/howdy/models/
+Stored face models.
+.SH SEE ALSO
+.BR howdy (1),
+project page:
+https://github.com/boltgolt/howdy

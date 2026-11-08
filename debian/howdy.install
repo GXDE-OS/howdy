@@ -1,0 +1,9 @@
+etc/howdy
+usr/bin/howdy
+usr/lib/howdy
+usr/lib/${DEB_HOST_MULTIARCH}/security/pam_howdy.so
+usr/share/bash-completion/completions/howdy
+usr/share/dlib-data
+usr/share/howdy/logo.png
+usr/share/man/man1/howdy.1
+usr/share/pam-configs/howdy

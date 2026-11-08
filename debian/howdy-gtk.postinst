@@ -1,0 +1,19 @@
+#!/bin/sh
+# postinst script for howdy-gtk
+set -e
+
+if [ "$1" = "configure" ]; then
+	# howdy-gtk needs the 'elevate' python module, which is not packaged by
+	# most distributions, so install it through pip when it is missing
+	if ! python3 -c "import elevate" >/dev/null 2>&1; then
+		if ! python3 -m pip install elevate >/dev/null 2>&1 && \
+		   ! python3 -m pip install --break-system-packages elevate >/dev/null 2>&1; then
+			echo "howdy-gtk: could not install the 'elevate' python module automatically." >&2
+			echo "howdy-gtk: install it manually with: python3 -m pip install --break-system-packages elevate" >&2
+		fi
+	fi
+fi
+
+#DEBHELPER#
+
+exit 0

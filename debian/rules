@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/default.mk
+
+# Meson options required for the Debian packaging layout:
+#  - python_path:    the interpreter used by the howdy / howdy-gtk launchers
+#  - install_pam_config: ship /usr/share/pam-configs/howdy (Debian/Ubuntu)
+#  - with_polkit:    ship the howdy-gtk polkit policy
+#  - py_sources_dir: keep the python sources outside the multiarch triplet
+#                    dir so they can be shared by arch:all howdy-gtk
+#  - inih:with_INIReader: allow the inih fallback subproject when the system
+#                    libinih does not provide INIReader.pc
+MESON_FLAGS = \
+	-Dpython_path=/usr/bin/python3 \
+	-Dinstall_pam_config=true \
+	-Dwith_polkit=true \
+	-Dpy_sources_dir=/usr/lib \
+	-Dinih:with_INIReader=true
+
+%:
+	dh $@ --buildsystem=meson
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(MESON_FLAGS)

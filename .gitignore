@@ -107,10 +107,14 @@ ENV/
 /howdy/src/snapshots
 
 # build files
-debian/howdy.substvars
+debian/*.substvars
 debian/files
 debian/debhelper-build-stamp
+debian/.debhelper/
 debian/howdy
+debian/howdy-gtk
+debian/tmp
+obj-*/
 
 # vscode
 .vscode/*

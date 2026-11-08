@@ -87,7 +87,7 @@ else
     )
 endif
 
-install_data('logo.png', install_tag: 'meta')
+install_data('logo.png', install_dir: datadir, install_tag: 'meta')
 autocomplete = configure_file(
     input: 'autocomplete/howdy.in',
     output: 'autocomplete',
@@ -101,10 +101,9 @@ install_data(
     rename: 'howdy',
 )
 
-fs = import('fs')
-if not fs.exists(config_path)
-    install_data('config.ini', install_dir: confdir, install_mode: 'rwxr--r--', install_tag: 'config')
-endif
+# Always stage the default config: package builds (dpkg-buildpackage) must
+# include /etc/howdy/config.ini even when howdy is installed on the build host
+install_data('config.ini', install_dir: confdir, install_mode: 'rwxr--r--', install_tag: 'config')
 
 install_data('dlib-data/install.sh', 'dlib-data/Readme.md', install_dir: dlibdatadir, install_mode: 'rwxr--r--')
 

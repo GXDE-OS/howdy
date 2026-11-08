@@ -1,0 +1,19 @@
+#!/bin/sh
+# postinst script for howdy
+set -e
+
+if [ "$1" = "configure" ]; then
+	# Register the howdy PAM configuration with pam-auth-update
+	if command -v pam-auth-update >/dev/null 2>&1; then
+		pam-auth-update --package
+	fi
+
+	# On a fresh install, point the user at the model download step
+	if [ -z "$2" ]; then
+		echo "howdy: run howdy-gtk (or /usr/share/dlib-data/install.sh) to download the face recognition models."
+	fi
+fi
+
+#DEBHELPER#
+
+exit 0

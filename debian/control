@@ -1,0 +1,50 @@
+Source: howdy
+Section: misc
+Priority: optional
+Maintainer: boltgolt <boltgolt@gmail.com>
+Standards-Version: 4.6.2
+Homepage: https://github.com/boltgolt/howdy
+Vcs-Git: https://github.com/boltgolt/howdy
+Vcs-Browser: https://github.com/boltgolt/howdy
+Rules-Requires-Root: no
+Build-Depends: debhelper-compat (= 13),
+               gettext,
+               libevdev-dev,
+               libinih-dev,
+               libpam0g-dev,
+               meson,
+               ninja-build,
+               pkg-config,
+               python3
+
+Package: howdy
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         bzip2,
+         curl | wget,
+         python3,
+         python3-numpy,
+         python3-opencv
+Recommends: howdy-gtk,
+            v4l-utils
+Suggests: python3-dlib,
+          nvidia-cuda-dev
+Description: Windows Hello style face authentication for Linux
+ Uses your built-in IR emitters and camera in combination with face recognition
+ to prove who you are.
+ .
+ This package contains the PAM module, the command line interface and the
+ face model downloader.
+
+Package: howdy-gtk
+Architecture: all
+Depends: ${misc:Depends},
+         gir1.2-gtk-3.0,
+         howdy (>= ${source:Version}),
+         python3,
+         python3-gi,
+         python3-pip
+Description: Optional GTK UI package for Howdy
+ Graphical user interface used to add face models, configure the camera and
+ run the first-run onboarding wizard for Howdy.

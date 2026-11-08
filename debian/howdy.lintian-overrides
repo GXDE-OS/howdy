@@ -1,0 +1,6 @@
+# Upstream installs these data files with the executable bit set
+howdy: executable-not-elf-or-script [etc/howdy/config.ini]
+howdy: executable-not-elf-or-script [usr/share/dlib-data/Readme.md]
+howdy: executable-not-elf-or-script [usr/share/pam-configs/howdy]
+# Local packaging, not heading for the Debian NEW queue
+howdy: initial-upload-closes-no-bugs

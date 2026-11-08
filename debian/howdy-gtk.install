@@ -1,0 +1,4 @@
+usr/bin/howdy-gtk
+usr/lib/howdy-gtk
+usr/share/howdy-gtk
+usr/share/polkit-1/actions/com.github.boltgolt.howdy-gtk.policy
