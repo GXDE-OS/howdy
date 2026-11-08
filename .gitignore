@@ -132,3 +132,5 @@ obj-*/
 
 # Meson
 subprojects/
+
+*.dat

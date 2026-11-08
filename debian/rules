@@ -9,6 +9,9 @@ include /usr/share/dpkg/default.mk
 #  - with_polkit:    ship the howdy-gtk polkit policy
 #  - py_sources_dir: keep the python sources outside the multiarch triplet
 #                    dir so they can be shared by arch:all howdy-gtk
+#  - fetch_dlib_data: download the face recognition models during the build
+#                    and bundle them, no download needed after installation
+#                    (requires network access while building)
 #  - inih:with_INIReader: allow the inih fallback subproject when the system
 #                    libinih does not provide INIReader.pc
 MESON_FLAGS = \
@@ -16,6 +19,7 @@ MESON_FLAGS = \
 	-Dinstall_pam_config=true \
 	-Dwith_polkit=true \
 	-Dpy_sources_dir=/usr/lib \
+	-Dfetch_dlib_data=true \
 	-Dinih:with_INIReader=true
 
 %:

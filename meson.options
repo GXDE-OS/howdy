@@ -1,5 +1,5 @@
 option('pam_dir', type: 'string', value: '', description: 'Set the pam_howdy destination directory')
-#option('fetch_dlib_data', type: 'boolean', value: false, description: 'Download dlib data files')
+option('fetch_dlib_data', type: 'boolean', value: false, description: 'Download dlib data files at build time and bundle them')
 option('config_dir', type: 'string', value: '', description: 'Set the howdy config directory')
 option('dlib_data_dir', type: 'string', value: '', description: 'Set the dlib data directory')
 option('user_models_dir', type: 'string', value: '', description: 'Set the user models directory')

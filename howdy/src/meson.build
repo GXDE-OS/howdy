@@ -109,48 +109,23 @@ install_data('dlib-data/install.sh', 'dlib-data/Readme.md', install_dir: dlibdat
 
 install_man('../howdy.1')
 
-# if get_option('fetch_dlib_data')
-#     downloader = find_program('wget')
-#     bunzip2 = find_program('bunzip2')
-
-#     links = [ 
-#         'https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2',
-#         'https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2',
-#         'https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2'
-#     ]
-
-#     archived_model_files = [
-#         'dlib_face_recognition_resnet_model_v1.dat.bz2',
-#         'shape_predictor_5_face_landmarks.dat.bz2',
-#         'mmod_human_face_detector.dat.bz2'
-#     ]
-
-#     download = run_command(
-#         'download',
-#         links,
-#         output: archived_model_files,
-#         command: [downloader, '-O', '@OUTPUT@', '@INPUT@']
-#     )
-
-#     model_files = [
-#         'dlib_face_recognition_resnet_model_v1.dat',
-#         'shape_predictor_5_face_landmarks.dat',
-#         'mmod_human_face_detector.dat'
-#     ]
-
-#     models = custom_target(
-#         'models',
-#         input: archived_model_files,
-#         output: model_files,
-#         command: [bunzip2, '-k', '@INPUT@'],
-#     )
-
-#     install_data(
-#         model_files,
-#         install_dir: join_paths(get_option('prefix'), get_option('libdir'), 'dlib_models'),
-#     )
-
-# endif
+if get_option('fetch_dlib_data')
+    # Download the dlib face recognition models during the build and bundle
+    # them with the package (requires network access while building)
+    models = custom_target(
+        'dlib_models',
+        output: [
+            'dlib_face_recognition_resnet_model_v1.dat',
+            'mmod_human_face_detector.dat',
+            'shape_predictor_5_face_landmarks.dat',
+        ],
+        command: [py, files('dlib-data/fetch.py'), '@OUTDIR@'],
+        console: true,
+        install: true,
+        install_dir: dlibdatadir,
+        install_mode: 'rw-r--r--',
+    )
+endif
 
 cli_path = join_paths(pysourcesinstalldir, 'cli.py')
 conf_data = configuration_data({ 'script_path': cli_path, 'python_path': py.full_path() })
