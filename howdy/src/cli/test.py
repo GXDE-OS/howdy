@@ -126,15 +126,18 @@ try:
 		height, width = frame.shape[:2]
 
 		# Create a histogram of the image with 8 values
-		hist = cv2.calcHist([frame], [0], None, [8], [0, 256])
+		# ravel() makes this work with both 1D and 2D calcHist results
+		hist = cv2.calcHist([frame], [0], None, [8], [0, 256]).ravel()
 		# All values combined for percentage calculation
-		hist_total = int(sum(hist)[0])
+		hist_total = float(np.sum(hist))
+		# Scale factor for percentages, 0 for fully black frames
+		hist_scale = 100 / hist_total if hist_total else 0
 		# Fill with the overall containing percentage
 		hist_perc = []
 
 		# Loop though all values to calculate a percentage and add it to the overlay
 		for index, value in enumerate(hist):
-			value_perc = float(value[0]) / hist_total * 100
+			value_perc = float(value) * hist_scale
 			hist_perc.append(value_perc)
 
 			# Top left point, 10px margins
@@ -154,8 +157,8 @@ try:
 		if slow_mode:
 			cv2.putText(overlay, _("SLOW MODE"), (width - 66, height - 10), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 0, cv2.LINE_AA)
 
-		# Ignore dark frames
-		if hist_perc[0] > dark_threshold:
+		# Ignore dark frames and fully black frames (bad camera reads)
+		if hist_total == 0 or hist_perc[0] > dark_threshold:
 			# Show that this is an ignored frame in the top right
 			cv2.putText(overlay, _("DARK FRAME"), (width - 68, 16), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 0, cv2.LINE_AA)
 		else:
